@@ -1,0 +1,30 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AuthServeService WSDL service -->
+
+  <service name="AuthServe" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://serv.auth.com"/>
+      <parameter name="wsdlServiceElement" value="AuthServeService"/>
+      <parameter name="schemaQualified" value="http://serv.auth.com"/>
+      <parameter name="wsdlServicePort" value="AuthServe"/>
+      <parameter name="className" value="com.auth.serv.AuthServeSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="AuthServe"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="admLogin" qname="operNS:admLogin" xmlns:operNS="http://serv.auth.com" returnQName="retNS:admLoginReturn" xmlns:retNS="http://serv.auth.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:uname" xmlns:pns="http://serv.auth.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:pass" xmlns:pns="http://serv.auth.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="admLogin"/>
+
+  </service>
+</deployment>
